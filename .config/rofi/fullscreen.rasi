@@ -1,0 +1,7 @@
+
+@import "Chris-Arc-Dark"
+
+window {
+    width: 95%;
+    font: "Mononoki Nerd Font 15";
+}

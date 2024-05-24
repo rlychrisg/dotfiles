@@ -1,0 +1,205 @@
+## variables
+set $mod Mod4
+set $term foot
+set $browser firefox
+set $files nemo
+set $menu rofi -show drun
+set $scripts ~/.local/bin
+
+smart_gaps on
+gaps inner 6
+hide_edge_borders smart_no_gaps
+title_align center
+default_border pixel 3
+
+include /etc/sway/config-vars.d/*
+output * bg /home/chris/wallpaper/leave-planet.jpg fill
+
+## {{{ Idle configuration
+
+# Example configuration:
+#
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+## }}}
+
+
+## {{{ Input configuration
+input * {
+    xkb_layout "gb"
+}
+
+input type:touchpad {
+    tap disabled
+    scroll_method edge
+    natural_scroll disabled
+}
+## }}}
+
+
+## {{{ theme stuff
+## colours. TODO need to have a proper look at this
+# Property Name             Border  BG      Text    Indicator Child-border
+client.focused              #1c3b52ff #285577 #ffffff #e9ff54ff   #36a3d9ff
+# client.focused_inactive     #2f343f #2f343f #d8dee8 #2f343f   #2f343f
+client.unfocused            #33333300 #2f343f #d8dee8 #2f343f   #2f343f
+# client.urgent               #2f343f #2f343f #d8dee8 #2f343f   #2f343f
+# client.placeholder          #2f343f #2f343f #d8dee8 #2f343f   #2f343f
+
+# GTK
+# This is the only place where you must set GTK scaling
+set $gnome-schema org.gnome.desktop.interface
+exec_always {
+  gsettings set $gnome-schema gtk-theme 'Arc-Dark'
+  gsettings set $gnome-schema icon-theme 'Vimix-Doder-dark'
+  gsettings set $gnome-schema text-scaling-factor 1.0
+  gsettings set $gnome-schema cursor-theme 'Numix-Square'
+  gsettings set $gnome-schema cursor-size 34
+}
+
+## }}}
+
+
+## {{{   Key bindings
+
+## window
+bindsym $mod+q kill
+## if swayr isn't installed
+# bindsym $mod+tab focus next
+# bindsym $mod+Shift+tab focus prev
+## Swap focus between the tiling area and the floating area
+# bindsym $mod+equal focus mode_toggle
+## if swayr is installed
+bindsym $mod+tab exec swayr prev-window current-workspace
+bindsym $mod+Control+tab exec swayr switch-window
+
+## for resizing windows with mouse
+floating_modifier $mod normal
+
+## hjkl moves switches focus in tiled windows, and moves floating windows
+bindsym $mod+h exec $scripts/sway_focus_move.sh h
+bindsym $mod+j exec $scripts/sway_focus_move.sh j
+bindsym $mod+k exec $scripts/sway_focus_move.sh k
+bindsym $mod+l exec $scripts/sway_focus_move.sh l
+
+# Move the focused window in tiled layout
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+## layout keys
+bindsym $mod+shift+minus splitt
+bindsym $mod+minus layout toggle splith splitv
+bindsym $mod+Shift+equal floating toggle
+bindsym $mod+equal layout toggle tabbed split
+
+# Switch to workspace
+bindsym $mod+a workspace number 1
+bindsym $mod+s workspace number 2
+bindsym $mod+d workspace number 3
+bindsym $mod+z workspace number 4
+bindsym $mod+x workspace number 5
+bindsym $mod+c workspace number 6
+bindsym $mod+w workspace number 7
+
+# Move focused container to workspace
+bindsym $mod+Shift+a move container to workspace number 1
+bindsym $mod+Shift+s move container to workspace number 2
+bindsym $mod+Shift+d move container to workspace number 3
+bindsym $mod+Shift+z move container to workspace number 4
+bindsym $mod+Shift+x move container to workspace number 5
+bindsym $mod+Shift+c move container to workspace number 6
+bindsym $mod+Shift+w move container to workspace number 7
+
+## apps
+bindsym $mod+f exec $files
+bindsym $mod+b exec $browser
+bindsym $mod+Control+t exec $term
+bindsym $mod+Return exec $menu
+
+## misc
+bindsym $mod+Control+r reload
+bindsym $mod+Control+q exec $scripts/rofi_exit.sh
+
+## clipboard stuff
+bindsym $mod+print exec cliphist list | rofi -dmenu -i | cliphist decode | wl-copy
+bindsym $mod+Control+Shift+print exec cliphist wipe && notify-send -t 1500 -i ~/.icons/Vimix-Doder-dark/scalable/apps/accessories-clipboard.svg 'Clipboard cleared' 'cliphist wipe'
+bindsym print exec grim -g "$(slurp -d)" - | wl-copy
+
+## misc user stuff
+bindsym $mod+Shift+Control+p exec $scripts/rofiscript.sh poddelete
+bindsym $mod+Shift+p exec $scripts/rofiscript.sh podselect
+bindsym $mod+Control+e exec $scripts/rofiscript.sh dots
+bindsym $mod+Shift+e exec $scripts/rofiscript.sh edit
+bindsym $mod+Shift+f exec $scripts/rofiscript.sh files
+bindsym $mod+Shift+m exec $scripts/rofiscript.sh media
+bindsym $mod+Shift+t exec $scripts/rofiscript.sh term
+
+## media
+bindsym $mod+space exec $scripts/mkeys.sh pp
+bindsym $mod+Up exec $scripts/mkeys.sh pu
+bindsym $mod+Down exec $scripts/mkeys.sh pd
+bindsym Shift+Control+Up exec $scripts/mkeys.sh mu
+bindsym Shift+Control+Down exec $scripts/mkeys.sh md
+bindsym XF86MonBrightnessDown exec $scripts/mkeys.sh bd
+bindsym XF86MonBrightnessUp exec $scripts/mkeys.sh bu
+
+## scratchpads (see rules)
+bindsym $mod+n exec $scripts/sway_scratchpads.sh scratchnote
+bindsym $mod+e exec $scripts/sway_scratchpads.sh scratchedit
+bindsym $mod+t exec $scripts/sway_scratchpads.sh scratchterm
+bindsym $mod+v exec $scripts/sway_scratchpads.sh scratchmisc
+
+# }}}
+
+
+## {{{ rules
+
+    ## generic
+    for_window [title="makemefloat"] floating enabled; resize set 1300 600
+    for_window [app_id="nemo"] floating enabled; resize set 800 850; move position 800 5
+    for_window [app_id="galculator"] floating enabled; resize set 410 400; move position 1150 10
+
+    ## workspace specific
+    for_window [workspace="1"] layout splitv
+    assign [title=".*Mozilla Firefox.*"] 1
+
+    assign [title=".*qBittorrent.*"] 6
+
+    ## scratchpads
+    for_window [app_id="scratchnote"] floating enabled; move to scratchpad
+    for_window [app_id="scratchedit"] floating enabled; move to scratchpad
+    for_window [app_id="scratchterm"] floating enabled; move to scratchpad
+
+## }}}
+
+
+## {{{ Status Bar
+bar {
+    swaybar_command waybar
+}
+## }}}
+
+
+## {{{ autostart
+
+exec dunst
+exec wl-paste --watch cliphist store
+exec nm-applet
+exec lxpolkit
+## for swayr
+exec env RUST_BACKTRACE=1 RUST_LOG=swayr=debug swayrd > /tmp/swayrd.log 2>&1
+
+## }}}
+
+include /etc/sway/config.d/*
+
+

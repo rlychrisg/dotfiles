@@ -1,0 +1,47 @@
+#!/bin/bash
+
+## help text
+if [[ $1 == "--help" || $1 == "-h" || $1 == "help" || $1 == "h" ]]; then
+    echo " "
+    echo "A script for backing up files"
+    echo " "
+    echo "To make a simple backup"
+    echo "    bup <file>"
+    echo "Will creake a .bk.file"
+    echo " "
+    echo "To give a version number and date,"
+    echo "as well as an optional message in"
+    echo "quotes. Spaces are replaced with"
+    echo "underscores"
+    echo " "
+    echo "  bup <file> v \"<message>\""
+else
+    ## take args
+    bupfile="$1"
+    datetoday=$(date +'%y-%m-%d.%H.%M')
+
+    case $2 in
+        v)
+            ## replace space with underscore
+            msg_sed=$(echo "$3" | sed s'/ /_/g')
+            echo "$msg_sed"
+
+            ## check if a message is given
+            if [[ $msg_sed = "" ]]; then
+                msg=""
+            else
+                msg=".${msg_sed}"
+            fi
+
+            ## renames the file as per date and msg (if given)
+            newname=".bk.${bupfile}.${datetoday}${msg}"
+            echo "$newname"
+            cp "$bupfile" "$newname"
+            ;;
+        *)
+            cp $bupfile ".bk.${bupfile}"
+            ;;
+    esac
+fi
+
+

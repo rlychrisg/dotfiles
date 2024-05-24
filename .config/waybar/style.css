@@ -1,0 +1,120 @@
+/* colours */
+/* @define-color fg            #d4dbe3; */
+@define-color fg            #d6dfe7;
+@define-color bg1           #020203;
+@define-color bg2           #0a111d;
+@define-color bordercolor   #4D5B71;
+@define-color dis           #606060;
+@define-color green         #56d42b;
+@define-color graph         #aee2da;
+@define-color alert-bg      #f85f63;
+@define-color alert         #ff1111;
+
+
+
+/* global stuff {{{ */
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: Mononoki Nerd Font;
+    font-size: 18px;
+}
+
+.module {
+    border-radius: 10px;
+    background-color: @bg2;
+    margin: 2 3px;
+    padding: 0px 9px;
+    border: 1px solid @bordercolor;
+    border-radius: 10px;
+    color: @fg;
+}
+/* }}} */
+
+
+
+/* Window {{{ */
+#waybar {
+  background-color: #020203;
+}
+
+window#waybar.empty {
+  background-color: transparent;
+}
+
+window#waybar.floating {
+    background-color: transparent;
+}
+
+/* this messes with tabbed windows so... */
+/* window.#waybar.tiled { */
+/*     padding-left: 5px; */
+/*     padding-right: 5px; */
+/*     color: #eee8d5; */
+/*     background-color: transparent; */
+/* } */
+
+window#waybar.tabbed {
+    background-color: #020203;
+}
+
+window#waybar.empty #window {
+  background-color: transparent;
+  border: none;
+}
+/* }}} */
+
+
+
+/* workspaces {{{ */
+#workspaces button {
+    padding: 0px 0px;
+    background-color: transparent;
+    color: @fg;
+}
+
+#workspaces button.empty {
+    background-color: transparent;
+    color: @dis;
+}
+
+#workspaces button.focused {
+    box-shadow: inset 0px 0px 3px 1px @fg;
+    border-radius: 8px;
+    transition-property: box-shadow;
+    transition-duration: 0.3s;
+    color: @fg;
+}
+
+#workspaces button:hover {
+    box-shadow: inset 0px 0px 3px 1px @fg;
+    border-radius: 8px;
+    transition-duration: 0.1s;
+}
+/* }}} */
+
+
+
+/* other stuff {{{  */
+#cpu {
+    color: @graph;
+}
+
+#custom-scratchpads.occupied {
+    /* each scratchpad icon has a trailing space */
+    /* because they take up more than one character */
+    /* so padding has to be added on the left */
+    padding: 0px 2px 0px 9px;
+}
+
+#custom-temp {
+    color: @green;
+}
+
+#custom-temp.alert,
+#temperature.critical {
+    color: @bg1;
+    background-color: @alert-bg;
+    border: 1px solid @alert;
+}
+/* }}} */
+

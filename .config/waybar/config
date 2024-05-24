@@ -1,0 +1,114 @@
+{
+    // "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 30, // Waybar height (to be removed for auto height)
+    "spacing": 0, // better to set this in styles
+
+    "modules-left": [ "sway/workspaces", "custom/scratchpads", "sway/mode", "sway/window" ],
+    "modules-center": [ ],
+    "modules-right": [ "custom/mem", "cpu", "custom/temp", "custom/utils", "tray", "clock"],
+
+// {{{ hyprland stuff
+
+    "hyprland/workspaces": {
+            "active-only": false,
+            "persistent-workspaces": { "*": 6, },
+            "format": "{icon}",
+            "format-icons": {
+                "1": "A",
+                "2": "S",
+                "3": "D",
+                "4": "Z",
+                "5": "X",
+                "6": "C",
+                "7": "W",
+                "8": "R",
+            },
+        },
+
+    "hyprland/submap": {
+        "format": "{} submap",
+    },
+
+    "hyprland/window": {
+        "format-window-separator": "󰇙",
+    },
+
+// }}}
+
+    // sway stuff {{{
+
+    // for toggling the bar
+    "bar_id": "bar-0",
+    "ipc": true,
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "format": "{icon}",
+        "persistent-workspaces": { "1": [], "2": [], "3": [], "4": [], "5": [], "6": [] },
+        "format-icons": {
+            "1":"A",
+            "2":"S",
+            "3":"D",
+            "4":"Z",
+            "5":"X",
+            "6":"C",
+        }
+    },
+
+    "sway/window": {
+        "format": "{title}",
+        "max-length": 50,
+        "rewrite": {
+        }
+    },
+    // }}}
+
+    // generic {{{
+
+    "custom/utils": {
+        "exec": "~/.local/bin/waybar_utils.sh",
+        "interval": 1,
+        },
+
+    "custom/temp": {
+        "exec": "~/.local/bin/waybar_temp.sh",
+        "return-type": "json",
+        "interval": 1,
+        },
+
+    "custom/scratchpads": {
+        "exec": "~/.local/bin/waybar_scratchpads.sh",
+        "return-type": "json",
+        "interval": 1,
+        },
+
+    "custom/mem": {
+        "exec": "~/.local/bin/waybar_bettermem.sh",
+        "interval": 10,
+        "on-click": "foot --title=btop btop",
+    },
+
+    "cpu": {
+     "interval": 1,
+     "format": "{icon0}{icon1}{icon2}{icon3}",
+          "format-icons": [
+          "<span color='#272822'>▁</span>",
+          "▁", "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
+        "on-click": "foot --title=btop btop"
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 5
+    },
+
+    "clock": {
+        // "timezone": "America/New_York",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%d-%m-%Y 󰇙 %R}"
+    },
+
+    // }}}
+}
+
