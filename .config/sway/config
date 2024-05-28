@@ -45,6 +45,9 @@ input type:touchpad {
 
 
 ## {{{ theme stuff
+
+font pango:JetBrains Mono 08
+
 ## colours. TODO need to have a proper look at this
 # Property Name             Border  BG      Text    Indicator Child-border
 client.focused              #1c3b52ff #285577 #ffffff #e9ff54ff   #36a3d9ff
@@ -171,6 +174,8 @@ bindsym $mod+v exec $scripts/sway_scratchpads.sh scratchmisc
     ## workspace specific
     for_window [workspace="1"] layout splitv
     assign [title=".*Mozilla Firefox.*"] 1
+    ## add torrent window
+    for_window [workspace="1" class=".*qBittorrent.*"] floating enable; resize set 1300 800
 
     assign [title=".*qBittorrent.*"] 6
 

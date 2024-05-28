@@ -28,8 +28,8 @@ git_prompt() {
 setopt PROMPT_SUBST
 function zle-line-init zle-keymap-select {
     case ${KEYMAP} in
-        (vicmd)         PROMPT=$'%F{0m}%K{2m} N %F{2m}%k%K{234m}▓▒░%b%F{251m} %3~%F{2m} ░%(?..%B%F{red}░ %? ░%b%F{2m})%k$(git_prompt)%f\n  ' ;;
-        (main|viins)    PROMPT=$'%F{0m}%K{75m} I %F{75m}%k%K{234m}▓▒░%b%F{251m} %3~%F{75m} ░%(?..%B%F{red}░ %? ░%b)%k$(git_prompt)\n%F{75m}>%f ' ;;
+        (vicmd)         PROMPT=$'%F{0m}%K{2m} NORMAL %F{2m}%k%K{234m}%b%F{251m} %3~%k%F{234m}%f%(?..%B%F{red} %? %b%F{2m})%F{2m}$(git_prompt)%f\n  ' ;;
+        (main|viins)    PROMPT=$'%F{0m}%K{75m} INSERT %F{75m}%k%K{234m}%b%F{251m} %3~%k%F{234m}%(?..%B%F{red} %? %b)%F{75m}$(git_prompt)\n%F{75m}>%f ' ;;
         (*)             PROMPT=$'%{\e[0;32m%}%~%{\e[0m%} $ ' ;;
     esac
     zle reset-prompt
@@ -133,7 +133,7 @@ alias mkcd='mkcd_alias() { mkdir -p "$1" && cd "$1"; }; mkcd_alias'
 #
 ## cd with rofi
 function cdd() {
-        newdir=$(find /home/chris /mnt/pt1/ /mnt/pt2/ -type d | grep -v -E "cache|GIMP|cargo|/Code|inkscape|RSS Guard|chris2|chrisway" | rofi -i -dmenu)
+        newdir=$(find /home/chris /mnt/pt1/ /mnt/pt2/ -type d | grep -v -E "cache|GIMP|cargo|/Code|inkscape|RSS Guard|chris2|chrisway" | rofi -filter "$1" -i -dmenu)
         if ! [[ $newdir == "" ]]; then
             cd $newdir
         fi
