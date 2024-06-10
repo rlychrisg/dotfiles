@@ -141,7 +141,8 @@ bindsym print exec grim -g "$(slurp -d)" - | wl-copy
 bindsym $mod+Shift+Control+p exec $scripts/rofiscript.sh poddelete
 bindsym $mod+Shift+p exec $scripts/rofiscript.sh podselect
 bindsym $mod+Control+e exec $scripts/rofiscript.sh dots
-bindsym $mod+Shift+e exec $scripts/rofiscript.sh edit
+# bindsym $mod+Shift+e exec $scripts/rofiscript.sh edit
+bindsym $mod+Shift+e exec foot nvim +'Telescope oldfiles'
 bindsym $mod+Shift+f exec $scripts/rofiscript.sh files
 bindsym $mod+Shift+m exec $scripts/rofiscript.sh media
 bindsym $mod+Shift+t exec $scripts/rofiscript.sh term
